@@ -1,6 +1,7 @@
-; 第一部分：FAT12 Boot记录
+org 0x7c00
+
 ; 标准FAT12格式软盘专用代码
-DB    0xeb, 0x4e        ; 跳转指令
+jmp entry
 DB    0x90              ; NOP指令
 DB    "HELLOIPL"        ; OEM标识符（8字节）
 DW    512               ; 每个扇区（sector）的字节数（必须为512字节）
@@ -22,29 +23,42 @@ DD    0xffffffff        ; 卷序列号
 DB    "HELLO-OS   "     ; 卷标（11字节）
 DB    "FAT12   "        ; 文件系统类型（8字节）
 
-; 第二部分：引导代码、数据以及其它信息
+; 引导代码、数据以及其它信息
 RESB  18                ; 空18字节
 
+
 ; 程序主体
-DB    0xb8, 0x00, 0x00, 0x8e, 0xd0, 0xbc, 0x00, 0x7c
-DB    0x8e, 0xd8, 0x8e, 0xc0, 0xbe, 0x74, 0x7c, 0x8a
-DB    0x04, 0x83, 0xc6, 0x01, 0x3c, 0x00, 0x74, 0x09
-DB    0xb4, 0x0e, 0xbb, 0x0f, 0x00, 0xcd, 0x10, 0xeb
-DB    0xee, 0xf4, 0xeb, 0xfd
+entry:
+    ; 初始化寄存器
+    mov ax, 0
+    mov ss, ax
+    mov sp, 0x7c00
+    mov ds, ax
+    mov es, ax
 
-; 信息显示部分数据
-DB    0x0a, 0x0a        ; 两个换行
-DB    "hello, world"
-DB    0x0a              ; 换行
-DB    0
+    mov si, msg
 
-RESB  0x1fe - ($ - $$)  ; 填写0x00，直到0x001fe
+putloop:
+    mov al, [si]
+    add si, 1
+    cmp al, 0
 
-; 第三部分：boot扇区结束标志，固定为0xaa55（小端表示）
+    je fin
+    mov ah, 0x0e    ; 显示一个文字
+    mov bx, 15      ; 指定字符颜色
+    int 0x10        ; 调用显卡BIOS 
+    jmp putloop
+
+fin: 
+    ; 结束
+    hlt             ; 让CPU停止，等待指令
+    jmp fin
+
+msg:
+    db 0x0a, 0x0a   ; 换行2次
+    db "hello, world"
+    db 0x0a
+    db 0
+
+times  0x1fe - ($ - $$) db 0
 DB    0x55, 0xaa
-
-; 启动区外的内容
-DB    0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-RESB  4600
-DB    0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-RESB  1469432
