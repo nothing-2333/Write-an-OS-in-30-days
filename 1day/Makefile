@@ -5,7 +5,7 @@ clean:
 	rm -rf helloos.bin
 
 qemu: all
-	qemu-system-i386 -fda helloos.bin
+	qemu-system-i386 -drive file=helloos.bin,format=raw
 
 .PHONY:
 	all
