@@ -7,4 +7,6 @@ int main(void)
 fin:
     io_hlt();
     goto fin;
+
+    return 0;
 }
