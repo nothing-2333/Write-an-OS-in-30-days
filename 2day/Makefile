@@ -4,10 +4,10 @@ all:
 	dd if=helloos.bin of=helloos.img bs=512 count=1 conv=notrunc
 
 clean:
-	rm -rf helloos.bin helloos.img
+	rm -rf helloos.bin helloos.img helloos.lst
 
 qemu: all
-	qemu-system-i386 -drive file=helloos.img,format=raw -gdb tcp::1234 -S
+	qemu-system-i386 -drive file=helloos.img,format=raw,if=floppy
 
 .PHONY:
 	all
