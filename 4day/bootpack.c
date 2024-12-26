@@ -23,7 +23,7 @@ void box_fill8(unsigned char* vram, int xsize, unsigned char c, int x0, int y0, 
 #define COL8_848400 11
 #define COL8_000084 12
 #define COL8_840084 13
-#define COL8_008484 14
+#define COL8_005C8B 14
 #define COL8_848484 15
 
 // 入口函数HariMain重命名为标准的main
@@ -38,7 +38,8 @@ int main(void)
     int x_size = 320;
     int y_size = 200;
 
-    box_fill8(vram, x_size, COL8_FFFFFF, 0, 0, x_size - 1, y_size - 29);
+ 
+    box_fill8(vram, x_size, COL8_005C8B, 0, 0, x_size - 1, y_size - 29);
     box_fill8(vram, x_size, COL8_C6C6C6, 0, y_size - 28, x_size - 1, y_size - 28);
     box_fill8(vram, x_size, COL8_FFFFFF, 0, y_size - 27, x_size - 1, y_size - 27);
     box_fill8(vram, x_size, COL8_C6C6C6, 0, y_size - 26, x_size - 1, y_size - 1);
@@ -76,7 +77,7 @@ void init_palette(void)
         0x84, 0x84, 0x00, // 暗黄色
         0x00, 0x00, 0x84, // 暗蓝色
         0x84, 0x00, 0x84, // 暗紫色
-        0x00, 0x84, 0x84, // 浅暗蓝色
+        0x00, 0x47, 0x7d, // 浅暗蓝色
         0x84, 0x84, 0x84  // 暗灰色
     };
 
