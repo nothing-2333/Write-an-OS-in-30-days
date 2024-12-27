@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "pm.h": "c",
+        "io.h": "c",
+        "graphic.h": "c",
+        "int.h": "c",
+        "desctbl.h": "c",
+        "bootpack.h": "c"
+    }
+}
