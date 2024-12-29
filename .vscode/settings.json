@@ -5,6 +5,7 @@
         "graphic.h": "c",
         "int.h": "c",
         "desctbl.h": "c",
-        "bootpack.h": "c"
+        "bootpack.h": "c",
+        "mouse.h": "c"
     }
 }
