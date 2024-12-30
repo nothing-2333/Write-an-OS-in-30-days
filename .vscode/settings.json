@@ -6,6 +6,7 @@
         "int.h": "c",
         "desctbl.h": "c",
         "bootpack.h": "c",
-        "mouse.h": "c"
+        "mouse.h": "c",
+        "keyboard.h": "c"
     }
 }
